@@ -8,7 +8,14 @@ import(
 func listen(stop <-chan string, stopped chan<- string){
     defer close(stopped)
     found := make(chan rover.Probe, 1000)
-    go rover.Scan("mon0", found, 5 * 60)
+    go rover.Scan(
+       found,
+       ACTIVE_SETTINGS.Driver,
+       ACTIVE_SETTINGS.Window(),
+       ACTIVE_SETTINGS.Location,
+       ACTIVE_SETTINGS.Threshold,
+       ACTIVE_SETTINGS.SampleRate,
+    )
     for {
     	select{
 		default:

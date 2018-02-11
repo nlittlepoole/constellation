@@ -34,6 +34,7 @@ type Event struct {
      Timestamp time.Time `gorm:primary_key`
      DeviceId string `gorm:primary_key`
      RadioStrength int64
+     Location string
 }
 
 func init() {
@@ -55,7 +56,8 @@ func logEvent(probe rover.Probe) (err error) {
      event := Event{
      	   Timestamp: probe.Timestamp,
      	   DeviceId: anonymize(probe.Address),
-	   RadioStrength: probe.Strength, 
+	   RadioStrength: probe.Strength,
+	   Location: probe.Location,
      }
      if ok := db.NewRecord(event); ok {
      	db.Create(&event)

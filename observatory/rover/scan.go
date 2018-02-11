@@ -7,21 +7,23 @@ import (
     "github.com/patrickmn/go-cache"
     "log"
     "time"
+    "math/rand"
 )
 
 type Probe struct{
      Address string
      Strength int64
      Timestamp time.Time
+     Location string
 }
 
-func Scan(device string, detected chan<- Probe, granularity int64){
+func Scan(detected chan<- Probe, device string, granularity time.Duration, location string, threshold int64, sampleRate float64){
     snapshotLen := int32(1024)
     promiscuous := false
     timeout := time.Duration(30) * time.Second
     var err error
     var handle *pcap.Handle
-    c := cache.New(time.Duration(granularity) * time.Second, time.Minute)
+    c := cache.New(granularity, time.Minute)
  
     // Open device
     handle, err = pcap.OpenLive(device, snapshotLen, promiscuous, timeout)
@@ -32,9 +34,12 @@ func Scan(device string, detected chan<- Probe, granularity int64){
     for packet := range packetSource.Packets() {
         if probe, ok := getProbe(packet); ok {
 	   if _, found := c.Get(probe.Address); !found {
-	      c.Set(probe.Address, true, cache.DefaultExpiration)
-	      probe.Timestamp = time.Now()
-	      detected <- probe
+	      if rand.Float64() <= sampleRate && probe.Strength < threshold {
+	      	      c.Set(probe.Address, true, cache.DefaultExpiration)
+	      	      probe.Timestamp = time.Now()
+	      	      probe.Location = location
+	      	      detected <- probe
+	      }
            }
 	}
     }
