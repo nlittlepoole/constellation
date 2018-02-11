@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<link rel="stylesheet" type="text/css" href="bulma.css">
+		<link rel="stylesheet" type="text/css" href="all.css">
+		<script src="vue.js"></script>
+		<style>
+		  html {
+		    height: 100%;
+		  }
+		  body {
+		    height: 100%;
+		    background: linear-gradient(#000000, #434343);
+		  }
+		  .splash {
+		    max-height: 95%;
+		    display:block;
+		    margin-left: auto;
+		    margin-right:auto
+		  }
+		</style>
+		
+	</head>
+	<body>
+	  <div id="constellation">
+	    <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+	      <div class="navbar-brand">
+		<strong class="navbar-item">
+		  Constellation
+		</strong>
+	      </div>
+	      <div id="control-flow" class="navbar-menu is-active">
+		<div class="navbar-start"> </div>
+	        <div class="navbar-end">
+		    <a class="navbar-item is-active"> Observatory </a>
+		    <a class="navbar-item"> Analytics </a>
+		    <a class="navbar-item"> Settings </a>
+	        </div>
+	      </div>
+	    </nav>
+	    <br><br><br>
+	    <div id="observatory" v-show="on_observatory">
+	      <div class="container has-text-centered">
+		<a class="button is-light is-outlined is-large" v-on:click="toggleObservation">
+		  <span>{{ toggleText }}</span>
+		</a>
+	      </div>
+	      <div class="container" v-show="is_not_observing">
+		<img class="splash" src="constellation.png">
+	      </div>
+	      <div class="content container is-large has-text-light" v-show="is_observing">
+		<h1 class="title has-text-light has-text-centered"> {{ active_uniques  }}</h1>
+		<p class="has-text-centered"> Active Uniques </p>
+	      </div>
+	    </div>
+	  </div>
+	  <script>
+	    var app;
+	    var rpc = {
+	    invoke : function(arg) { window.external.invoke(JSON.stringify(arg)); },
+	    startObserving : function() { rpc.invoke({cmd : 'start_observing'}); },
+	    stopObserving : function() { rpc.invoke({cmd : 'stop_observing'}); },
+	    getActive: function() {rpc.invoke({cmd: 'active_uniques'});},
+	    render: function(resp) {
+	      if (resp.error.length > 0 ) {
+	        console.log(resp.error)
+	       } else {
+	         switch(resp.cmd){
+                   case "start_observation":
+	             app.is_observing = true;
+                   case "stop_observation":
+	             app.is_observing = false;
+	           case "active_uniques":
+	             app.active_uniques = resp.data;
+	         }
+	       }
+	    }
+	    };
+	    app = new Vue({
+	      el: '#constellation',
+	      created: function(){
+	        this.updateActive()
+                setInterval(this.updateActive, 20000);
+               	//setInterval(this.updateActive(), 30000);
+               	    
+ 	      },
+	      computed: {
+	        toggleText: function(){ return this.is_observing ? "Stop" : "Start"},
+	        on_observatory: function(){return this.screen =='observatory'},
+	        is_not_observing: function(){ return !this.is_observing},
+	      },
+	      data: {
+	        screen: 'observatory',
+	        is_observing: false,
+	        active_uniques: 0,
+	      },
+	      methods: {
+	        toggleObservation: function(){
+	          if(this.is_observing){
+	            rpc.stopObserving();
+	            this.is_observing = false;
+	          } else {
+	            rpc.startObserving();
+	            this.is_observing = true;
+	          }
+	        },
+	        updateActive: function(){
+                  if(this.is_observing){
+	            rpc.getActive();
+                  }
+	        }
+	      }
+	    })
+	  </script>
+	</body>
+</html>

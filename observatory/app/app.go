@@ -18,6 +18,8 @@ import (
 	"github.com/zserge/webview"
 )
 
+var stop chan string
+var stopped chan string
 
 func startServer() string {
 	ln, err := net.Listen("tcp", "127.0.0.1:0")
@@ -46,17 +48,26 @@ func startServer() string {
 	return "http://" + ln.Addr().String()
 }
 
-// Task is a data model type, it contains information about task name and status (done/not done).
-type Task struct {
-	Name string `json:"name"`
-	Done bool   `json:"done"`
+func startObserving(){
+     stop = make(chan string)
+     stopped = make(chan string)
+     go listen(stop, stopped)
 }
 
-// Tasks is a global data model, to keep things simple.
-var Tasks = []Task{}
+func stopObserving(){
+     close(stop)
+     <-stopped     
+}
 
-func render(w webview.WebView, tasks []Task) {
-	b, err := json.Marshal(tasks)
+// empty string response means everything is cool
+type Response struct {
+        Cmd string `json:"cmd"`
+	Error string `json:"error"`
+	Data interface{}   `json:"data"`
+}
+
+func render(w webview.WebView, resp Response) {
+	b, err := json.Marshal(resp)
 	if err == nil {
 		w.Eval(fmt.Sprintf("rpc.render(%s)", string(b)))
 	}
@@ -71,70 +82,39 @@ func handleRPC(w webview.WebView, data string) {
 		return
 	}
 	switch cmd.Name {
-	case "init":
-		render(w, Tasks)
-	case "log":
-		logInfo := struct {
-			Text string `json:"text"`
-		}{}
-		if err := json.Unmarshal([]byte(data), &logInfo); err != nil {
-			log.Println(err)
-		} else {
-			log.Println(logInfo.Text)
+	case "start_observing":
+		startObserving()
+		render(w, Response{cmd.Name, "", "Success"})
+	case "stop_observing":
+		stopObserving()
+		render(w, Response{cmd.Name, "", "Success"})
+	case "active_uniques":
+	        uniques, err := GetCurrentUniques(ACTIVE_SETTINGS.Window())
+		var errString string
+		if err != nil {
+		   errString = err.Error()
 		}
-	case "addTask":
-		task := Task{}
-		if err := json.Unmarshal([]byte(data), &task); err != nil {
-			log.Println(err)
-		} else if len(task.Name) > 0 {
-			Tasks = append(Tasks, task)
-			render(w, Tasks)
-		}
-	case "markTask":
-		taskInfo := struct {
-			Index int  `json:"index"`
-			Done  bool `json:"done"`
-		}{}
-		if err := json.Unmarshal([]byte(data), &taskInfo); err != nil {
-			log.Println(err)
-		} else if taskInfo.Index >= 0 && taskInfo.Index < len(Tasks) {
-			Tasks[taskInfo.Index].Done = taskInfo.Done
-			render(w, Tasks)
-		}
-	case "clearDoneTasks":
-		newTasks := []Task{}
-		for _, task := range Tasks {
-			if !task.Done {
-				newTasks = append(newTasks, task)
-			}
-		}
-		Tasks = newTasks
-		render(w, Tasks)
-	}
+		render(w, Response{cmd.Name, errString, uniques})
+        }
 }
 
 func main() {
 	url := startServer()
 	w := webview.New(webview.Settings{
-		Width:  320,
-		Height: 480,
-		Title:  "Todo App",
+		Width:  1100,
+		Height: 576,
+		Title:  "Constellation",
+		Resizable: true,
+		Debug: true,
 		URL:    url,
 		ExternalInvokeCallback: handleRPC,
 	})
 	defer w.Exit()
-	w.Run()
-	
-     //stop := make(chan string)
-     //stopped := make(chan string)
-     //go listen(stop, stopped)
- 
-     //time.Sleep(120 * time.Second)
-     //close(stop)
-     //<-stopped
+	w.Run()	
+
 
      //fmt.Println(GetAllUniques(time.Minute))
-     //fmt.Println(GetCurrentUniques(time.Minute))
+
      //fmt.Println(GetReturningUniques(time.Now().Add(-300 * time.Second), time.Now()))
      //fmt.Println(GetStrengthHistogram(time.Now().Add(-300 * time.Second), time.Now()))
 }
