@@ -7,7 +7,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	//"time"
+	"time"
 	"io"
 	"log"
 	"mime"
@@ -95,7 +95,34 @@ func handleRPC(w webview.WebView, data string) {
 		   errString = err.Error()
 		}
 		render(w, Response{cmd.Name, errString, uniques})
-        }
+	case "get_settings":
+	     render(w, Response{cmd.Name, "", ACTIVE_SETTINGS})
+	case "set_settings":
+	     fmt.Println(data)
+	     if err := json.Unmarshal([]byte(data), &ACTIVE_SETTINGS); err != nil {
+	     	render(w, Response{cmd.Name, err.Error(), false})
+	     } else {
+	       var errString string
+	       if err := ACTIVE_SETTINGS.Save(); err != nil {
+	       	  errString = err.Error()
+	       }
+	       render(w, Response{cmd.Name, errString, ACTIVE_SETTINGS})
+	     }
+	case "get_timeseries":
+	     series, err := GetAllUniques(ACTIVE_SETTINGS.Window())
+	     var errString string
+	     if err != nil {
+		errString = err.Error()
+	     }
+	     render(w, Response{cmd.Name, errString, series})
+	case "get_retention":
+	     retention, err := GetReturningUniques(time.Now().Add(-30 * ACTIVE_SETTINGS.Window()), time.Now())
+	     var errString string
+	     if err != nil {
+		errString = err.Error()
+	     }
+	     render(w, Response{cmd.Name, errString, retention})
+	}
 }
 
 func main() {
@@ -113,8 +140,8 @@ func main() {
 	w.Run()	
 
 
-     //fmt.Println(GetAllUniques(time.Minute))
+     
 
-     //fmt.Println(GetReturningUniques(time.Now().Add(-300 * time.Second), time.Now()))
+     //fmt.Println()
      //fmt.Println(GetStrengthHistogram(time.Now().Add(-300 * time.Second), time.Now()))
 }

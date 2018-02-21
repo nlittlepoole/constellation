@@ -24,9 +24,9 @@ func getDateFormatString(granularity time.Duration) string {
      }
 }
 
-type Point struct{
-     X string
-     Y int64
+type Timeseries struct {
+     X []string `json:"x"`
+     Y []int64 `json:"y"`
 }
 
 
@@ -68,8 +68,9 @@ func logEvent(probe rover.Probe) (err error) {
 }
 
 
-func GetUniques(start time.Time, end time.Time, granularity time.Duration) ([]Point, error){
-     series := make([]Point, 0)
+func GetUniques(start time.Time, end time.Time, granularity time.Duration) (Timeseries, error){
+     x := make([]string, 0)
+     y := make([]int64, 0)
      rows, err := db.Raw(
      `
      SELECT
@@ -88,32 +89,34 @@ func GetUniques(start time.Time, end time.Time, granularity time.Duration) ([]Po
      if err == nil {
      	  defer rows.Close()
           for rows.Next(){
-     	  	 point := Point{}
-	 	 err = rows.Scan(&point.X, &point.Y)
+		 var key string
+		 var val int64
+	 	 err = rows.Scan(&key, &val)
 		 if err == nil {
-		    series = append(series, point)
+		    x = append(x, key)
+		    y = append(y, val)
 		 }
           }
      }
-     return series, err
+     return Timeseries{x, y}, err
 }
 
-func GetAllUniques(granularity time.Duration) ([]Point, error){
+func GetAllUniques(granularity time.Duration) (Timeseries, error){
      return GetUniques(time.Unix(0, 0), time.Now(), granularity)
 }
 
 func GetCurrentUniques(window time.Duration)(result int64, err error){
      series, err:= GetUniques(time.Now().Add(-1 * window), time.Now(),  window)
      total := int64(0)
-     for _, point := range series {
-     	 total += point.Y
+     for _, point := range series.Y {
+     	 total += point
      }
      return total, err
 }
 
 type Returning struct {
-     Old int64
-     New int64
+     Old int64 `json:"old"`
+     New int64 `json:"new"`
 }
 
 func GetReturningUniques(start time.Time, end time.Time) (Returning, error){
@@ -150,8 +153,9 @@ func GetReturningUniques(start time.Time, end time.Time) (Returning, error){
      return result, err
 }
 
-func GetStrengthHistogram(start time.Time, end time.Time) ([]Point, error){
-     series := make([]Point, 0)
+func GetStrengthHistogram(start time.Time, end time.Time) (Timeseries, error){
+     x := make([]string, 0)
+     y := make([]int64, 0)
      rows, err := db.Raw(
      `
      SELECT
@@ -169,12 +173,14 @@ func GetStrengthHistogram(start time.Time, end time.Time) ([]Point, error){
      if err == nil {
      	  defer rows.Close()
           for rows.Next(){
-     	  	 point := Point{}
-	 	 err = rows.Scan(&point.X, &point.Y)
+		 var key string
+		 var val int64
+	 	 err = rows.Scan(&key, &val)
 		 if err == nil {
-		    series = append(series, point)
+		    x = append(x, key)
+		    y = append(y, val)
 		 }
           }
      }
-     return series, err
+     return Timeseries{x, y}, err
 }
