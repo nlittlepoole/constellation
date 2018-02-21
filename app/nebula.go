@@ -5,7 +5,7 @@ import(
 	"errors"
 	"crypto/sha1"
 	"encoding/hex"
-	"github.com/nlittlepoole/constellation/observatory/rover"
+	"github.com/nlittlepoole/observatory/rover"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )

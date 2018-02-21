@@ -1,7 +1,7 @@
 package main
 
 import(
-	"github.com/nlittlepoole/constellation/observatory/rover"
+	"github.com/nlittlepoole/observatory/rover"
 	"fmt"
 )
 
