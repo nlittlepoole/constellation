@@ -9,19 +9,21 @@ import (
 )
 
 type Settings struct {
-	Driver      string
-	Location    string
-	Threshold   int64
-	SampleRate  float64
-	Granularity string
+	Driver        string  `yaml:"driver"`
+	Location      string  `yaml:"location"`
+	Threshold     int64   `yaml:"threshold"`
+	SampleRate    float64 `yaml:"sample_rate"`
+	SessionUnit   string  `yaml:"session_unit"`
+	SessionLength int64   `yaml:"session_length"`
 }
 
 var DEFAULT_SETTINGS Settings = Settings{
-	Driver:      "mon0",
-	Location:    "Wayne Manor",
-	Threshold:   100,
-	SampleRate:  1.0,
-	Granularity: "hour",
+	Driver:        "mon0",
+	Location:      "Wayne Manor",
+	Threshold:     100,
+	SampleRate:    1.0,
+	SessionUnit:   "minute",
+	SessionLength: 30,
 }
 
 const SETTINGS_FILE string = "settings.yaml"
@@ -48,15 +50,17 @@ func init() {
 	}
 }
 
-func (s *Settings) Window() time.Duration {
-	switch s.Granularity {
+func (s *Settings) Session() time.Duration {
+	var unit time.Duration
+	switch s.SessionUnit {
 	case "hour":
-		return time.Hour
+		unit = time.Hour
 	case "minute":
-		return time.Minute
+		unit = time.Minute
 	default:
-		return time.Hour * 24
+		unit = time.Hour * 24
 	}
+	return unit * time.Duration(s.SessionLength)
 }
 
 func (s *Settings) Save() error {

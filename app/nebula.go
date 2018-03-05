@@ -23,6 +23,7 @@ func init() {
 	var err error
 	dbPath := filepath.Join(getCachePath(), DB_FILENAME)
 	if db, err = gorm.Open("sqlite3", dbPath); err != nil {
+		log.Error(err)
 		panic(err)
 	}
 	db.AutoMigrate(&Event{})

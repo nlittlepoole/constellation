@@ -20,6 +20,7 @@ func init() {
 	if err := osConfig.QueryFolders(configdir.Global)[0].MkdirAll(); err != nil {
 		panic(err)
 	}
+	log.Info("Settings stored at ", osConfig.QueryFolders(configdir.Global)[0].Path)
 }
 
 func getCachePath() string {

@@ -1,32 +1,31 @@
 package main
 
-import(
+import (
 	"github.com/nlittlepoole/observatory/rover"
-	"fmt"
 )
 
-func listen(stop <-chan string, stopped chan<- string){
-    defer close(stopped)
-    found := make(chan rover.Probe, 1000)
-    go rover.Scan(
-       found,
-       ACTIVE_SETTINGS.Driver,
-       ACTIVE_SETTINGS.Window(),
-       ACTIVE_SETTINGS.Location,
-       ACTIVE_SETTINGS.Threshold,
-       ACTIVE_SETTINGS.SampleRate,
-    )
-    for {
-    	select{
+func listen(stop <-chan string, stopped chan<- string) {
+	defer close(stopped)
+	found := make(chan rover.Probe, 1000)
+	go rover.Scan(
+		found,
+		ACTIVE_SETTINGS.Driver,
+		ACTIVE_SETTINGS.Session(),
+		ACTIVE_SETTINGS.Location,
+		ACTIVE_SETTINGS.Threshold,
+		ACTIVE_SETTINGS.SampleRate,
+	)
+	for {
+		select {
 		default:
 			p := <-found
-			fmt.Println(p)
+			log.Debug(p)
 			if err := logEvent(p); err != nil {
-	   		   fmt.Println(err)
+				log.Warn(err)
 			}
 		case <-stop:
-		     // stop
-		     return
+			// stop
+			return
+		}
 	}
-    }
 }
