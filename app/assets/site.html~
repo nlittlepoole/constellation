@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Constellation</title>
+	<link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
+	<link rel="stylesheet" href="vendors/bulma/css/bulma.css">
+	<link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
+	<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" href="styles/main.css">
+	<style>
+		.center {
+		    display: block;
+		    margin-left: auto;
+		    margin-right: auto;
+		}
+		canvas {
+		  display: block;
+		  vertical-align: bottom;
+		}
+
+		#particles-hero {
+		  position: absolute;
+		  width: 100%;
+		  height: 100%;
+			background: $background
+		}
+		ul.listicon
+		{
+			list-style-type: none;
+		}
+		ul.listicon li
+		{
+			text-indent: -1.4em;
+		}
+		ul.listicon li:before {    
+		font-family: 'FontAwesome';
+		content: '\f067';
+		color: #f00;
+		margin:0 5px 0 -15px;
+		}
+
+		ul.listicon li.yes:before { content: "\f058"; color: #14B37D; }
+		ul.listicon li.no:before { content: "\f057"; color: "#FF5A60"; }
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115066520-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-115066520-1');
+	</script>
+	<script src="https://cldup.com/S6Ptkwu_qA.js"></script>
+	<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="b8de3b0f-456b-4a5b-a95b-2bc2ed09659e";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
+	</script>
+</head>
+<body style="background-color:rgba(0,0,0, 0.1);"" >
+<section class="hero is-dark is-small">
+ 
+<div class="hero-head">
+	<div id="particles-hero"> </div>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item">
+            <strong>Constellation</strong>
+          </a>
+          <span class="navbar-burger burger" data-target="navbarMenuHeroB" id="navbar-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenuHeroB" class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item" href="/blog/">
+              Blog
+            </a>
+            <a class="navbar-item" href="/docs/">
+              Docs
+            </a>
+            <a class="navbar-item" href="/help/">
+              Help
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+  <div class="hero-body" >
+  	
+    <div class="container has-text-centered">
+      <p class="title">
+        <img style="max-width:300px" src="assets/constellation.png">
+      </p>
+      <p class="subtitle">
+        Analyze the Real World like a Website
+      </p>
+      <a class="button is-primary">Get Started</a>
+      <a class="button is-info" onclick="$crisp.push(['do', 'chat:open'])">Contact Us</a>
+    </div>
+  </div>
+
+</section>
+
+<section>
+	<div class="container">
+		<div class="tile is-ancestor is-light box">
+		  <div class="tile is-parent">
+		    <article class="tile is-child is-light">
+		      <div class="content">
+		      <video autoplay="true" loop="true" muted="" > <source src="https://statsbot.co/images/content/slack_fix.mp4" type="video/mp4"></video>
+		      </div>
+		    </article>
+		  </div>
+		<div class="tile is-vertical">
+			<div class="tile is-parent">
+			   <article class="tile is-child ">
+				  	<p class="subtitle is-4"> 
+				  		What is Customer Intelligence?
+				  	</p>
+				  	<br>
+				  	<p class="title is-4">How Many Customers Visit Your Store and Why. Scalable. Instant. Simple to Implement
+			  	</article>
+			</div>
+			<div class="tile is-vertical">
+				<div class="tile is-parent">
+				   <article class="tile is-child ">
+					  	<div class="level">
+						  	<div class="level-left">
+						  		<span class="icon is-large has-text-danger">
+							  		<i class="fas fa-cogs fa-2x"></i>
+							  	</span>
+						  	</div>
+						  	<div class="level-left">
+							  	<div>
+							  	<p class="subtitle">Automatically Collect your Basic Business Insights</p>
+							  	<p>"How many customers do I have?"</p>
+							  	</div>
+						  	</div>
+					  	</div>
+				  	</article>
+				</div>
+				<div class="tile is-parent">
+				   <article class="tile is-child ">
+					  	<div class="level">
+						  	<div class="level-left">
+						  		<span class="icon is-large has-text-info">
+							  		<i class="fas fa-clock fa-2x"></i>
+							  	</span>
+						  	</div>
+						  	<div class="level-left">
+							  	<div>
+							  	<p class="subtitle">
+							  		Understand your Customers' Habits and Patterns
+							  	</p>
+							  	<p>"How many customers come back every month?"</p>
+							  	</div>
+						  	</div>
+					  	</div>
+				  	</article>
+				</div>
+				<div class="tile is-parent">
+				   <article class="tile is-child ">
+					  	<div class="level">
+						  	<div class="level-left">
+						  		<span class="icon is-large has-text-primary">
+							  		<i class="fas fa-usd fa-2x"></i>
+							  	</span>
+						  	</div>
+						  	<div class="level-left">
+							  	<div>
+							  	<p class="subtitle">Measure Effectiveness through Customer Flows</p>
+							  	<p>"Did instagram ads increase foot traffic to the store?"</p>
+							  	</div>
+						  	</div>
+					  	</div>
+				  	</article>
+				</div>
+			</div>
+		 </div>
+	</div>
+</section>
+<section class="hero is-dark is-small" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1451968362585-6f6b322071c7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=16bfca10320ce15442235b0bb9f0a735&auto=format&fit=crop&w=2978&q=80');">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="subtitle is-2">
+        80% of Americans own a Smart Phone
+      </h2>
+      <div class="content">
+      	<p class="is-size-4"> The average smart phone probes the world for WiFi, anywhere from 800 to 2000 probe signals per hour. Constellation's suite of tools allows you to turn these signals into insight. How many phones enter your space, acts as a proxy for the number of people walking in the door.<p>
+
+		<p class="is-size-4">Our services <strong>do not collect personal information on your customers</strong>, ensuring the utmost privacy. All you need to get started, is a WiFi enabled computer.<p>		
+
+   	 
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section ">
+	<div class="container is-light" >
+		<div class="tile is-ancestor is-light is-vertical">
+			<div class="tile is-parent">
+				<article class="tile is-child">
+					<p class=title has-text-centered"> Products & Pricing</p>
+				</article>
+			</div>
+			<div class="tile is-parent">
+			  <article class="tile is-child box">
+			  	<img class="center" src="assets/observatory.svg" style="max-width:25%">
+			  	<p class="title has-text-centered">Observatory</p>
+			  	<p class="subtitle has-text-centered"> 
+			  		Collect Data for Free
+			  	</p>
+				<div class="columns">
+				  <div class="column is-one-third"></div>
+				  <div class="column">
+				  	<div class="level is-mobile">
+				  		<div class="level-item">
+				  			<p class="title has-text-centered has-text-primary is-1">$0</p>
+				  		</div>
+				  	</div>
+				  </div>
+				  <div class="column is-one-third"></div>
+			  	</div>
+			  	<div class="content">
+			  		<p>
+					Observatory is a free and open source desktop application. It allows any business to track physical visitors by scanning for mobile phone WiFi signals.
+					</p>
+					<div class="columns">
+					  <div class="column is-one-third"></div>
+					  <div class="column">
+						<ul class="listicon">
+							<li class="yes">Windows, Mac, & Linux Support</li>
+							<li class="yes">Unlimited User Data Collection</li>
+							<li class="yes">No Equipment Installation</li>
+							<li class="no">Cloud Data Storage</li>
+							<li class="no">User Authentication</li>
+						</ul>   
+					  </div>
+					</div>
+					<div class="content has-text-centered">
+						<a class="button is-info has" href="https://github.com/nlittlepoole/observatory/releases">
+						    <span class="icon">
+						      <i class="fas fa-download"></i>
+						    </span>
+						    <span>Download</span>
+						</a>
+					</div>
+
+		  		</div>
+
+			  </article>
+			  <article class="tile is-child box">
+			    <img src="assets/singularity.svg" class="center" style="max-width:25%">
+			  	<p class="title has-text-centered">Singularity</p>
+			  	<p class="subtitle has-text-centered"> 
+			  		Advanced Analytics Platform
+			  	</p>
+				<div class="columns">
+				  <div class="column is-one-third"></div>
+				  <div class="column">
+				  	<div class="level is-mobile">
+				  		<div class="level-item">
+				  			<p class="title has-text-centered has-text-primary is-1">$15</p>
+				  		</div>
+				  		<div class="level-item">
+				  			<p class="title has-text-centered has-text-primary is-3">Per Month</p>
+				  		</div>
+				  	</div>
+				  </div>
+				  <div class="column is-one-third"></div>
+			  	</div>
+			  	<div class="content">
+					<p>Singularity is where Observatory puts all your customer intelligence data. Perform complex customer intelligence analysis and get answers in seconds with machine learning, enterprise security, and 99.99% uptime.
+					</p>
+					<div class="columns">
+					  <div class="column is-one-third"></div>
+					  <div class="column">
+						<ul class="listicon">
+							<li class="yes">Unlimited Data in the Cloud</li>
+							<li class="yes">Free Observatory Compatible WiFI Dongle</li>
+							<li class="yes">Forecasting & Alerting</li>
+							<li class="yes">Data Encryption</li>
+							<li class="yes">User Authentication & Permissioning</li>
+							<li class="yes">GDPR Compliance</li>
+							<li class="yes">Integrate with Popular BI Tools</li>
+							<li class="yes">Priority Support</li>
+						</ul>   
+					  </div>
+					</div>
+					<div class="content has-text-centered">
+						<a class="button is-danger" href="https://landbot.io/u/H-25286-DMXRGPJS4V441352/index.html">
+						    <span class="icon">
+						      <i class="fas fa-envelope"></i>
+						    </span>
+						    <span>Coming Soon: Sign Up</span>
+						</a>
+					</div>
+			  	</div>
+			  </article>
+		  </div>
+		</div>
+	</div>
+</section>
+<section class="hero is-small is-dark">
+	<div class="container">
+		<br><h2 class="title">FAQ</h2>
+		<div class="card">
+		  <header class="card-header">
+		    <p class="card-header-title">
+		      Is this form of data collection legal?
+		    </p>
+		  </header>
+		  <div class="card-content">
+		    <div class="content">
+		      Packet sniffing in the United States is legal for many usecases. However, using the technology to monitor user communications can be considered unwarranted wiretapping. Constellation's tools only read the headers of a particular type of packet with no user data. This is completely legal and protects the privacy of your customers. 
+		    </div>
+		  </div>
+		</div>
+		<div class="card">
+		  <header class="card-header">
+		    <p class="card-header-title">
+		      Can I use the internet on my computer while using Observatory?
+		    </p>
+		  </header>
+		  <div class="card-content">
+		    <div class="content">
+		      In order to work properly, Observatory has to control your WiFi radio in your computer and cannot share that with your normal internet habbits. However, when you purchase Singularity, we'll ship you a USB WiFi dongle that Observatory can use exclusively. That way you can still browse the internet while Observatory runs.  
+		    </div>
+		  </div>
+		</div>
+		<div class="card">
+		  <header class="card-header">
+		    <p class="card-header-title">
+		      Do you sell data to 3rd parties?
+		    </p>
+		  </header>
+		  <div class="card-content">
+		    <div class="content">
+		      No, Constellation is focused on providing data and analytics to business owners, not third parties. We do not attempt to identify your customers. Your data is only accessible by you and anyone you give access to.   
+		    </div>
+		  </div>
+		</div>
+		<div class="card">
+		  <header class="card-header">
+		    <p class="card-header-title">
+		      I have Observatory running at multiple locations? How can I join that data?
+		    </p>
+		  </header>
+		  <div class="card-content">
+		    <div class="content">
+		      When you purchase Singularity, you can configure your Observatory instances to push all their data to Singularity. From the Singularity web app, you can slice and dice the data all at once.  
+		    </div>
+		  </div>
+		</div>
+		<div class="card">
+		  <header class="card-header">
+		    <p class="card-header-title">
+		      What is Open Source and what does it mean for Observatory?
+		    </p>
+		  </header>
+		  <div class="card-content">
+		    <div class="content">
+		      Observatory is fully Open Source. Meaning you, or anyone, can inspect the code and ensure that security, privacy and accuracy is at the level we claim. Even if Constellation goes out of business, that code will always be available so that you'll never be cut off from your data.
+		    </div>
+		  </div>
+		</div>
+	</div>
+</section>
+<footer class="footer">
+  <div class="container">
+  	<div class="level">
+  		<div class="level-item">
+  			<div>
+	  			<p><a target="_blank" href="https://github.com/nlittlepoole/observatory">Github</a></p>
+	  			<p><a target="_blank" href="/blog">Blog</a></p>
+	  		</div>
+	  	</div>
+	  	<div class="level-item">
+	  		<div>
+			  	<p><a target="_blank" onclick="$crisp.push(['do', 'chat:open'])">Contact Us</a></p>
+			  	<p><a target="_blank" href="https://landbot.io/u/H-25286-DMXRGPJS4V441352/index.html">Sign up for Singularity Updates</a></p>
+			</div>
+	  	</div>
+	</div>
+  </div>
+</footer>
+<script type="text/javascript">
+ 		// ParticlesJS Config.
+		particlesJS("particles-hero", {
+		  "particles": {
+		    "number": {
+		      "value": 80,
+		      "density": {
+		        "enable": true,
+		        "value_area": 700
+		      }
+		    },
+		    "color": {
+		      "value": "#ffffff"
+		    },
+		    "shape": {
+		      "type": "circle",
+		      "stroke": {
+		        "width": 0,
+		        "color": "#000000"
+		      },
+		      "polygon": {
+		        "nb_sides": 5
+		      },
+		    },
+		    "opacity": {
+		      "value": 0.5,
+		      "random": false,
+		      "anim": {
+		        "enable": false,
+		        "speed": 1,
+		        "opacity_min": 0.1,
+		        "sync": false
+		      }
+		    },
+		    "size": {
+		      "value": 3,
+		      "random": true,
+		      "anim": {
+		        "enable": false,
+		        "speed": 40,
+		        "size_min": 0.1,
+		        "sync": false
+		      }
+		    },
+		    "line_linked": {
+		      "enable": true,
+		      "distance": 150,
+		      "color": "#ffffff",
+		      "opacity": 0.4,
+		      "width": 1
+		    },
+		    "move": {
+		      "enable": true,
+		      "speed": 6,
+		      "direction": "none",
+		      "random": false,
+		      "straight": false,
+		      "out_mode": "out",
+		      "bounce": false,
+		      "attract": {
+		        "enable": false,
+		        "rotateX": 600,
+		        "rotateY": 1200
+		      }
+		    }
+		  },
+		  "interactivity": {
+		    "detect_on": "canvas",
+		    "events": {
+		      "onhover": {
+		        "enable": true,
+		        "mode": "grab"
+		      },
+		      "onclick": {
+		        "enable": true,
+		        "mode": "push"
+		      },
+		      "resize": true
+		    },
+		    "modes": {
+		      "grab": {
+		        "distance": 140,
+		        "line_linked": {
+		          "opacity": 1
+		        }
+		      },
+		      "bubble": {
+		        "distance": 400,
+		        "size": 40,
+		        "duration": 2,
+		        "opacity": 8,
+		        "speed": 3
+		      },
+		      "repulse": {
+		        "distance": 200,
+		        "duration": 0.4
+		      },
+		      "push": {
+		        "particles_nb": 4
+		      },
+		      "remove": {
+		        "particles_nb": 2
+		      }
+		    }
+		  },
+		  "retina_detect": true
+		});
+        document.getElementById("navbar-toggle").addEventListener ("click", toggleNav);
+        function toggleNav() {
+                var nav = document.getElementById("navbarMenuHeroB");
+                var className = nav.getAttribute("class");
+                if(className == "navbar-menu") {
+                    nav.className = "navbar-menu is-active";
+                } else {
+                    nav.className = "navbar-menu";
+                }
+        }
+    </script>
+</body>
+</html>

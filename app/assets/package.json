@@ -1,0 +1,14 @@
+{
+  "name": "singularity",
+  "version": "1.0.0",
+  "description": "website",
+  "main": "index.js",
+  "repository": "git@github.com:nlittlepoole/singularity.git",
+  "author": "Niger <nlittlepoole@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bulma": "^0.6.2",
+    "font-awesome": "^4.7.0"
+  }
+}

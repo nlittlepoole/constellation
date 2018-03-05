@@ -1,0 +1,28 @@
+@import "../vendors/bulma/sass/utilities/initial-variables";
+@import "../vendors/bulma/sass/utilities/functions";
+
+
+
+// init variables
+$black: hsl(0, 0%, 4%);
+$black-bis: rgba(0, 0, 0, 0.9);
+$black-ter: rgba(0, 0, 0, 0.8);
+$grey-darker: rgba(0, 0, 0, 0.7);
+$grey-dark: rgba(0, 0, 0, 0.6);
+$grey: rgba(69, 78, 85, 1);
+$grey-light: rgba(69, 78, 85, .6);
+$grey-lighter: rgba(69, 78, 85, .1);
+$orange: hsl(18, 90%, 55%);
+$yellow: hsl(43, 96%, 65%);
+$green: hsl(72, 64%, 52%);
+$turquoise: hsl(160, 80%, 39%);
+$cyan: hsl(204, 67%, 48%);
+$blue: hsl(186, 100%, 26%);
+$purple:hsl(325, 100%, 46%);
+$red:	hsl(358, 100%, 68%);	
+$family-sans-serif: "Raleway", Verdana;
+
+// derived variables
+$dark: $black;
+
+@import "../vendors/bulma/bulma.sass";

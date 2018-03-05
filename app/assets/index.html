@@ -1,273 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-		<link rel="stylesheet" type="text/css" href="bulma.css">
-		<link rel="stylesheet" type="text/css" href="all.css">
-		<script src="vue.js"></script>
-		<script src="Chart.js"></script>
-		<style>
-		  html {
-		    height: 100%;
-		  }
-		  body {
-		    height: 100%;
-		    background: linear-gradient(#000000, #434343);
-		  }
-		  .splash {
-		    max-height: 95%;
-		    display:block;
-		    margin-left: auto;
-		    margin-right:auto
-		  }
-		</style>
-		
-	</head>
-	<body>
-	  <div id="constellation">
-	    <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-	      <div class="navbar-brand">
-		<strong class="navbar-item">
-		  Constellation
-		</strong>
-	      </div>
-	      <div id="control-flow" class="navbar-menu is-active">
-		<div class="navbar-start"> </div>
-	        <div class="navbar-end">
-		    <a class="navbar-item" v-on:click="tab('observatory')" v-bind:class=" {'is-active': on_observatory }"> Observatory </a>
-		    <a class="navbar-item" v-on:click="tab('analytics')" v-bind:class=" {'is-active': on_analytics }"> Analytics </a>
-		    <a class="navbar-item" v-on:click="tab('settings')" v-bind:class=" {'is-active': on_settings }"> Settings </a>
-	        </div>
-	      </div>
-	    </nav>
-	    <br><br><br>
-	    <div id="observatory" v-show="on_observatory">
-	      <div class="container has-text-centered">
-		<a class="button is-light is-outlined is-large" v-on:click="toggleObservation">
-		  <span>{{ toggleText }}</span>
-		</a>
-	      </div>
-	      <div class="container" v-show="is_not_observing">
-		<img class="splash" src="constellation.png">
-	      </div>
-	      <div class="content container is-large has-text-light" v-show="is_observing">
-		<h1 class="title has-text-light has-text-centered"> {{ active_uniques }}</h1>
-		<p class="has-text-centered"> Active Uniques in the last {{ settings.Granularity }}</p>
-	      </div>
-	    </div>
+  <head>
 
-	    <div id="analytics" v-show="on_analytics">
-	      <div class="container has-text-centered">
-		<div class="columns">
-		  <div class="column">
-		    <h1>Time Series</h1>
-		    <canvas id="timeseries"></canvas>
-		  </div>
-		  <div class="column">
-		    <h1> Pie Chart </h1>
-		    <canvas id="retention"></canvas>
-		  </div>
-		</div>
-		<div class="columns">
-		  <div class="column">
-		    <h1> Histogram </h1>
-		  </div>
-		</div>
-	      </div>
-	    </div>
+  </head>
+  <body style="background-color: hsl(0, 0%, 4%); height:100vh;">
+  <div id="app">
+    <section class="hero is-dark is-small"> 
+      <div class="hero-head">
+      <nav class="navbar">
+        <div class="container">
+          <div class="navbar-brand">
+            <a class="navbar-item">
+              <strong>Constellation</strong>
+            </a>
+         </div>
+        <div id="navbarMenuHeroB" class="navbar-menu">
+          <div class="navbar-end">
+            <span class="navbar-item" v-on:click="toggleObserving">
+              <a class="button" v-bind:class="{'is-primary': off, 'is-danger': on}">
+		<span> {{ toggleText }} </span>
+	      </a>
+            </span>
+            <span class="navbar-item" >
+              <a class="button is-info" v-on:click="test">
+		<span class="icon">
+		  <i class="fas fa-sliders-h"></i>
+		</span>
+		<span>Settings </span>
+	      </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
+    <section class="is-dark">
+      <div class="field is-grouped">
+          <label class="label is-small has-text-white"> By: </label>
+	  <p class="control">
+		 <div class="select">
+		   <select>
+		     <option>Minute</option>
+		     <option>Hour </option>
+		     <option>Day</option>
+		   </select>
+		 </div>
+	       </p>
+        
 
+	       <p class="control">
+		 <input type="text" placeholder="Start Date">
+	       </p>
 
-	    
-	    <div id="settings" v-show="on_settings">
-	      <div class="container has-text-centered">
-		<p v-show="is_observing" class="is-danger"> Cannot update settings while Constellation is collecting data. Please stop scan, to enable edit mode </p>
-		<div class="field">
-		  <label class="label">Location Name</label>
-		  <div class="control">
-		    <input class="input" type="text" v-model="settings.Location" :disabled="is_observing">
-		   </div>
-		</div>
-		<div class="field">
-		  <label class="label">Event Sample Rate</label>
-		  <div class="control">
-		    <input class="input" type="number" min=".01" max="1.0001" v-model.number="settings.SampleRate" :disabled="is_observing" number>
-		  </div>
-		</div>
-		
-		<div class="field">
-		  <label class="label">Maximum Signal Distance</label>
-		  <div class="control">
-		    <input class="input" type="number" min="0" max="101" v-model.number="settings.Threshold" :disabled="is_observing" number>
-		  </div>
-		</div>
-		<div class="field">
-		  <div class="control">
-		    <select v-model="settings.Granularity">
-		      <option disabled value=""> Please select one </option>
-		      <option :disabled="is_observing">day</option>
-		      <option :disabled="is_observing">hour</option>
-		      <option :disabled="is_observing">minute</option>
-		    </select>
-		  </div>
-		</div>
-		<div class="field">
-		  <div class="control">
-		    <button class="button is-success" v-on:click="saveSettings()">
-		      Save
-		    </button>
-		  </div>
-		</div>
-	      </div>
-	    </div>
-	  </div>
-	  <script>
-	    function createTimeseries(d){
-	      console.log("Instantiation dataset ", JSON.stringify(d));
-	      var ctx = document.getElementById("timeseries"); 
-              var chart = new Chart(ctx, {
-                // The type of chart we want to create
-                type: 'line',
-                // The data for our dataset
-                data: {
-	         labels: Array.from(d.x),
-                 datasets: [{
-                   label: "Uniques",
-                   //backgroundColor: 'rgb(255, 255, 255)',
-                   borderColor: 'rgb(255, 255, 255)',
-                   data: Array.from(d.y),
-                 }]
-                },
-                // Configuration options go here
-                options: {}
-              });
-	      return chart;
-	    };
+	       <p class="control">
+		 <input type="text" placeholder="Until Before">
+	       </p>
 
-	    function createPieChart(d){
-	      var ctx = document.getElementById("retention"); 	      
-              var myPieChart = new Chart(ctx,{
-                type: 'pie',
-                data: {
-                  labels: ["New Uniques", "Returning Uniques"],
-	          backgroundColor: ["rgba(255, 255, 255, 0.0)","rgba(255, 255, 255, 1)" ],
-	          datasets: [{data: [d.old, d.new]}]
-	        },
-                options: {}
-              });
-	      return myPieChart
+      </div>
+    </section>
+</div>
 
-	    }
-	    var app;
-	    var rpc = {
-	    invoke : function(arg) { window.external.invoke(JSON.stringify(arg)); },
-	    startObserving : function() { rpc.invoke({cmd : 'start_observing'}); },
-	    stopObserving : function() { rpc.invoke({cmd : 'stop_observing'}); },
-	    getTimeseries: function() {rpc.invoke({cmd: 'get_timeseries'});},
-	    getRetention: function() {rpc.invoke({cmd: 'get_retention'});},
-	    getActive: function() {rpc.invoke({cmd: 'active_uniques'});},
-	    getSettings: function() {rpc.invoke({cmd: 'get_settings'});},
-	    setSettings: function(s) { s.cmd = 'set_settings'; rpc.invoke(s);},
-	    render: function(resp) {
-	      if (resp.error.length > 0 ) {
-	        console.log(resp.error)
-	       } else {
-	         switch(resp.cmd){
-                   case "start_observation":
-	             app.is_observing = true;
-	             break;
-                   case "stop_observation":
-	             app.is_observing = false;
-	             break;
-	           case "active_uniques":
-	             app.active_uniques = resp.data;
-	             break;
-	           case "get_settings":
-	             app.settings = resp.data;
-	             break;
-	    	   case "set_settings":  
-	             app.settings = resp.data;
-	             break;
-	           case "get_timeseries":
-	             app.updateTimeseries(resp.data);
-	             break;
-	           case "get_retention":
-	             app.updateRetention(resp.data);
-	             break;
-	           }
-	       }
-	    }
-	    };
-	    app = new Vue({
-	      el: '#constellation',
-   	      created: function(){
-	        rpc.getSettings();
-	        rpc.getActive();
-	        rpc.getTimeseries();
-	        rpc.getRetention();
-                setInterval(this.updateActive, 20000);
-               	setInterval(this.updateTimeseries, 30000);
-               	    
- 	      },
-	      computed: {
-	        toggleText: function(){ return this.is_observing ? "Stop" : "Start"},
-	        on_observatory: function(){return this.screen =='observatory'},
-	        on_analytics: function(){return this.screen =='analytics'},
-	        on_settings: function(){return this.screen =='settings'},
-	        is_not_observing: function(){ return !this.is_observing},
-	      },
-	      data: {
-	        screen: 'observatory',
-	        is_observing: false,
-	        active_uniques: 0,
-	        settings: {},
-	        timeseries_data: {x:["1"], y: [1]},
-	        timeseries_chart: null,
-	        retention_data: {old:0, new:0},
-	        pie_chart: null,
-	      },
-	      methods: {
-	        toggleObservation: function(){
-	          if(this.is_observing){
-	            rpc.stopObserving();
-	            this.is_observing = false;
-	          } else {
-	            rpc.startObserving();
-	            this.is_observing = true;
-	          }
-	        },
-	        updateActive: function(){
-                  if(this.is_observing){
-	            rpc.getActive();
-                  }
-	        },
-	        tab: function(screen){
-	          rpc.getSettings();
-	          this.screen = screen;
-	          if(this.on_analytics && this.timeseries_chart == null){
-                    this.timeseries_chart = createTimeseries(this.timeseries_data);                 this.pie_chart = createPieChart(this.retention_data);
-	          }
-	        },
-	        saveSettings: function(){
-	           rpc.setSettings(this.settings);
-	        },
-                updateTimeseriesData: function(){
-                   rpc.getTimeseries();
-	        },
-                updateTimeseries: function(data){
-	           this.timeseries_data = data;
-	           if(this.on_analytics && this.timeseries_chart != null){
-	             this.timeseries_chart.data.labels = data.x;
-                     this.timeseries_chart.data.datasets[0] = data.y;
-	           }
-	        },
-                updateRetention: function(data){
-	           this.retention_data = data;
-	           if(this.on_analytics && this.pie_chart != null){
-                     this.timeseries.data.datasets[0] = [data.old, data.new];
-	           }
-	        },
-	      }
-	    })
-	  </script>
-	</body>
+  </body>
 </html>
